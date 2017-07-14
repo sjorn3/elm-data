@@ -26,6 +26,19 @@ functor : { e | andMap : a -> b -> c, pure : d -> a } -> Functor d b c
 functor { andMap, pure } =
     Functor (\f -> andMap (pure f))
 
+list : Applicative (List (a -> b)) (List a) (List b) a1 (List a1) (a2 -> b1) (List a2) (List b1)
+list =
+    let
+        andMap fs xs =
+            case fs of
+                [] ->
+                    []
+
+                f :: fs ->
+                    List.map f xs ++ andMap fs xs
+    in
+        applicative Functor.list andMap List.singleton
+
 
 ziplist : Applicative (List (c -> d)) (List c) (List d) a (List a) (a1 -> b) (List a1) (List b)
 ziplist =
