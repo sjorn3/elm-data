@@ -24,7 +24,7 @@ addFunctor rec =
 
 functor : { e | andMap : a -> b -> c, pure : d -> a } -> Functor d b c
 functor { andMap, pure } =
-    Functor (\f -> andMap (pure f))
+    Functor.functor (\f -> andMap (pure f))
 
 list : Applicative (List (a -> b)) (List a) (List b) a1 (List a1) (a2 -> b1) (List a2) (List b1)
 list =

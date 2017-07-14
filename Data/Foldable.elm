@@ -5,17 +5,37 @@ module Data.Foldable exposing (..)
 import Array
 import Set
 
-type alias Foldr a b c r = 
-    { r | foldr : (a -> b -> b) -> b -> c -> b } 
 
-type alias Foldable a b c = Foldr a b c {}
-    
+type alias Foldr a b c r =
+    { r | foldr : (a -> b -> b) -> b -> c -> b }
+
+
+type alias Foldable a b c =
+    Foldr a b c {}
+
+
 foldable : ((a -> b -> b) -> b -> c -> b) -> Foldable a b c
-foldable foldr = { foldr = foldr }
+foldable foldr =
+    { foldr = foldr }
+
 
 list : Foldable a b (List a)
 list =
     foldable List.foldr
+
+
+maybe : Foldable a b (Maybe a)
+maybe =
+    let
+        foldr f z m =
+            case m of
+                Nothing ->
+                    z
+
+                Just x ->
+                    f x z
+    in
+        foldable foldr
 
 
 array : Foldable a b (Array.Array a)
