@@ -7,12 +7,12 @@ import Platform.Cmd
 import Platform.Sub
 
 
-type alias Map a b c r =
+type alias Mappable a b c r =
     { r | map : a -> b -> c }
 
 
 type alias Functor a b c =
-    Map a b c {}
+    Mappable a b c {}
 
 
 functor : (a -> b -> c) -> Functor a b c

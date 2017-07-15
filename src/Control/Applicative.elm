@@ -3,6 +3,11 @@ module Control.Applicative exposing (..)
 import Data.Functor as Functor exposing (Functor)
 import Task
 
+-- map2 : AndMappable a b c d e r -> d -> e -> b -> c
+-- map2 : { f | andMap : a -> b -> c, map : d -> e -> a } -> d -> e -> b -> c
+-- map2 { map, andMap } f a b = a |> map f |> flip andMap b
+
+-- map3 rec a b c = rec.andMap (map2 maybe (\ a b c -> a + b + c) a b) c
 
 type alias AndMappable a b c d e r =
     { r | andMap : a -> b -> c, pure : d -> e }

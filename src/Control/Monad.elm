@@ -1,6 +1,6 @@
 module Control.Monad exposing (..)
 
-import Data.Functor exposing (Functor)
+import Data.Functor exposing (Mappable)
 import Control.Applicative as Applicative exposing (AndMappable, Applicative)
 import Task
 
@@ -10,13 +10,18 @@ type alias AndThenable a b c d r =
 
 
 type alias Monad a b c d e f g h i j k l =
-    AndThenable a b c d (AndMappable e f g h i (Functor j k l))
+    AndThenable a b c d (AndMappable e f g h i (Mappable j k l {}))
 
 
 monad : Applicative e f g h i j k l -> ((a -> b) -> c -> d) -> Monad a b c d e f g h i j k l
 monad { map, andMap, pure } andThen =
     { map = map, andMap = andMap, pure = pure, andThen = andThen }
 
+join : { d | andThen : (a -> a) -> b -> c } -> b -> c
+join { andThen } m = m |> andThen identity
+
+map : { e | andThen : (a -> b) -> c, pure : d -> b } -> (a -> d) -> c
+map { andThen, pure } f = andThen (\a -> pure (f a))
 
 list : Monad a (List b) (List a) (List b) (List (a1 -> b1)) (List a1) (List b1) a1_1 (List a1_1) (a2 -> b1_1) (List a2) (List b1_1)
 list =

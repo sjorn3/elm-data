@@ -20,7 +20,7 @@ suite =
             , fuzz int "for result" (rightIdentityTest result)
             ]
         , describe "Associativity law"
-            --"(m >>= f) >>= g == m >>= (\x -> f x >>= g)"
+            -- "(m >>= f) >>= g == m >>= (\x -> f x >>= g)"
             [ fuzz3 int int int "for maybe" (associativityTest maybe)
             , fuzz3 int int int "for list" (associativityTest list)
             , fuzz3 int int int "for result" (associativityTest result)
