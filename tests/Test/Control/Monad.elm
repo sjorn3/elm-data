@@ -19,7 +19,8 @@ suite =
             , fuzz int "for list" (rightIdentityTest list)
             , fuzz int "for result" (rightIdentityTest result)
             ]
-        , describe "Associativity law" --"(m >>= f) >>= g == m >>= (\x -> f x >>= g)" 
+        , describe "Associativity law"
+            --"(m >>= f) >>= g == m >>= (\x -> f x >>= g)"
             [ fuzz3 int int int "for maybe" (associativityTest maybe)
             , fuzz3 int int int "for list" (associativityTest list)
             , fuzz3 int int int "for result" (associativityTest result)
@@ -46,9 +47,15 @@ rightIdentity : { c | andThen : a -> b -> b, pure : a } -> b -> Bool
 rightIdentity { andThen, pure } m =
     andThen pure m == m
 
-associativityTest monad a b = isTrue << associativity monad (monad.pure << (*) a) (monad.pure << (-) b) << monad.pure
 
-associativity { andThen, pure } f g m = (m |> andThen f |> andThen g) == andThen (\x -> andThen g (f x)) m
+associativityTest : { a | andThen : (number -> c) -> c -> c, pure : number -> c } -> number -> number -> number -> Expectation
+associativityTest monad a b =
+    isTrue << associativity monad (monad.pure << (*) a) (monad.pure << (-) b) << monad.pure
+
+
+associativity : { d | andThen : (a -> b) -> b -> b, pure : c } -> (a -> b) -> (a -> b) -> b -> Bool
+associativity { andThen, pure } f g m =
+    (m |> andThen f |> andThen g) == andThen (\x -> andThen g (f x)) m
 
 
 isTrue : Bool -> Expectation

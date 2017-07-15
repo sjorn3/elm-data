@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "All the power of monads, with the elegance of a brick.",
-    "repository": "https://github.com/user/project.git",
+    "repository": "https://github.com/sjorn3/elm-control.git",
     "license": "BSD3",
     "source-directories": [
         "./src"
