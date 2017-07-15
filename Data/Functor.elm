@@ -1,4 +1,4 @@
-module Control.Functor exposing (..)
+module Data.Functor exposing (..)
 
 import Set
 import Array

@@ -1,6 +1,6 @@
 module Control.Applicative exposing (..)
 
-import Control.Functor as Functor exposing (Functor)
+import Data.Functor as Functor exposing (Functor)
 import Task
 
 

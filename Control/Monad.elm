@@ -1,6 +1,6 @@
 module Control.Monad exposing (..)
 
-import Control.Functor exposing (Functor)
+import Data.Functor exposing (Functor)
 import Control.Applicative as Applicative exposing (AndMappable, Applicative)
 import Task
 

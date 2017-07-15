@@ -1,7 +1,7 @@
 module Data.Traversable exposing (..)
 
 import Data.Foldable as Foldable exposing (Foldr, Foldable)
-import Control.Functor as Functor exposing (Map, Functor)
+import Data.Functor as Functor exposing (Map, Functor)
 
 
 type alias Traverse ap a b c d r =
