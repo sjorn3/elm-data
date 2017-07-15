@@ -175,10 +175,9 @@ Whereas a version that explicitly uses maybe will work out just fine:
 compute a = Maybe.Just a |> Maybe.andThen (List.head) |> Maybe.andThen (Maybe.Just << ((*) 2))
 ```
 
-Note that this would occur even if there were higher kinds, so it's actually
-not as big of a draw back as it may appear. There is an issue pertaining to
-this if you want more information about it here:
-https://github.com/elm-lang/elm-compiler/issues/238
+There is an issue pertaining to the addition of ranked polymorphism
+[here](https://github.com/elm-lang/elm-compiler/issues/238) if you want more
+information.
 
 However, just because you can't perform chaining like this doesn't mean that
 you can't define some very neat and powerful abstractions! For example,
