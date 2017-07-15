@@ -1,4 +1,4 @@
-# elm-control: Experimental implementation of generic operations for elm.
+# elm-data: Experimental implementation of generic operations for elm.
 
 Provides means for defining resusable code that can be applied to a `List`, a
 `Maybe`, or any other data structure you provide the base functions for.
@@ -102,6 +102,17 @@ We start needing to be more explicit about which definitions of things we want
 here, but it makes things more readable for the person trying to understand it
 at least.
 
+I think the best example of this is with `Result`.
+
+```elm
+sequence Traversable.list Applicative.result [Ok 3, Err "Oh dear", Ok 20] == Err "Oh dear"
+sequence Traversable.list Applicative.result [Ok 3, Ok 40] == Ok [3, 40]
+```
+
+If you have some function that applies across a list of values and may fail,
+it's a great time to `traverse` with that function. You'll either get back
+a list containing your succesful results, or a single error message.
+
 ## Monads
 
 I've been avoiding types up to here, because they are not as pretty as the code.
@@ -115,16 +126,8 @@ type alias Monad a b c d e f g h i j k l =
     AndThenable a b c d (AndMappable e f g h i (Mappable j k l {}))
 ```
 
-But it also *works*. You lose a lot of the niceties that come with having a
-type system that can support higher kinded types (don't expect glowing error
-messages) but the code itself can still be very neat and readable.
-
-I wouldn't bother trying to give type signatures to most of these things, I, 
-for the most part, just use the signatures that the elm compiler tells me, and
-then test the operation to make sure that it is doing what I'd expect.
-
-In fact, a fairly neat example of this is the monad laws tests in the tests
-directory.
+But it, save the restriction below, it *works*. The code itself can still be
+very neat and readable.
 
 Here is a definition of `join`. That is, `concat` but for an arbitrary `monad`.
 
@@ -143,10 +146,10 @@ you get something which starts to look more reasonable.
 <function> : List (List b) -> List b
 ```
 
-Although this is of course dependent on how well the function is defined. The
-`Monad` alias (along with the other aliases) help to aleviate this somewhat, but
-ultimately there is a greater risk of problems and bad definitions than there
-would be if the type came out like this:
+Although this is of course dependent on how well the `andThen` function is
+defined. The `Monad` alias (along with the other aliases) help to aleviate this
+somewhat, but ultimately there is a greater risk of problems and bad definitions
+than there would be if the type came out like this:
 ```elm
 join : { d | andThen : (a -> m b) -> m a -> m b } -> m (m a) -> m a
 ```
@@ -176,7 +179,9 @@ this if you want more information about it here:
 https://github.com/elm-lang/elm-compiler/issues/238
 
 However, just because you can't perform chaining like this doesn't mean that
-you can't define some very neat and powerful abstractions!
+you can't define some very neat and powerful abstractions! For example,
+`foldM` is definable as it does not require chaining `andThen`, and is
+defined in `Control.Monad`.
 
 ## Why did you make this?
 
