@@ -128,7 +128,7 @@ type alias Monad a b c d e f g h i j k l =
     AndThenable a b c d (AndMappable e f g h i (Mappable j k l {}))
 ```
 
-But it, save the restriction below, it *works*. The code itself can still be
+But, save the restriction below, it *works*. The code itself can still be
 very neat and readable.
 
 Here is a definition of `join`. That is, `concat` but for an arbitrary `monad`.
