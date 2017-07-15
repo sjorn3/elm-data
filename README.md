@@ -1,4 +1,4 @@
-# elm-data: Experimental implementation of generic operations for elm.
+# elm-data: Experimental implementation of generic operations for elm. [![Build Status](https://travis-ci.com/sjorn3/elm-data.svg?token=yqduYxjYcVhWa7fwLx3k&branch=master)](https://travis-ci.com/sjorn3/elm-data)
 
 Provides means for defining resusable code that can be applied to a `List`, a
 `Maybe`, or any other data structure you provide the base functions for.
