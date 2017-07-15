@@ -81,7 +81,9 @@ inside a structure.
 .andMap ziplist [((*) 2), ((/) 4)] [4,5,10] == [8,0.8] 
 ```
 A cool feature of this is that you can change the semantics by simply changing
-the definitions in the record, as evidenced by the `ziplist` example.
+the definitions in the record, as evidenced by the `ziplist` example. Having
+said that, this `ziplist` isn't technically a valid applicative, the short
+reason being that in elm the default lists aren't lazy.
 
 ## Traversable
 

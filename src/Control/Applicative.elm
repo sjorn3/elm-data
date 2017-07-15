@@ -3,12 +3,6 @@ module Control.Applicative exposing (..)
 import Data.Functor as Functor exposing (Functor)
 import Task
 
--- map2 : AndMappable a b c d e r -> d -> e -> b -> c
--- map2 : { f | andMap : a -> b -> c, map : d -> e -> a } -> d -> e -> b -> c
--- map2 { map, andMap } f a b = a |> map f |> flip andMap b
-
--- map3 rec a b c = rec.andMap (map2 maybe (\ a b c -> a + b + c) a b) c
-
 type alias AndMappable a b c d e r =
     { r | andMap : a -> b -> c, pure : d -> e }
 
@@ -31,6 +25,7 @@ functor : { e | andMap : a -> b -> c, pure : d -> a } -> Functor d b c
 functor { andMap, pure } =
     Functor.functor (\f -> andMap (pure f))
 
+
 list : Applicative (List (a -> b)) (List a) (List b) a1 (List a1) (a2 -> b1) (List a2) (List b1)
 list =
     let
@@ -44,7 +39,10 @@ list =
     in
         applicative Functor.list andMap List.singleton
 
-
+{-|
+This violates the applicative laws as there is no way to produce an infinite
+strict list, it's kept here as a placeholder.
+-}
 ziplist : Applicative (List (c -> d)) (List c) (List d) a (List a) (a1 -> b) (List a1) (List b)
 ziplist =
     applicative Functor.list (List.map2 (<|)) (List.singleton)
