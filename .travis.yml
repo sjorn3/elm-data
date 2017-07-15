@@ -1,0 +1,21 @@
+sudo: false
+
+cache:
+  directories:
+    - elm-stuff
+    - tests/elm-stuff
+    - node_modules
+
+before_install:
+  - nvm install node
+  - nvm use node
+  - node --version
+  - npm --version
+  - npm install elm
+  - npm install elm-test
+  - export PATH=$PATH:$(pwd)/node_modules/.bin/
+
+script:
+  - elm-test
+
+language: elm
